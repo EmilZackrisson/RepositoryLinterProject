@@ -2,58 +2,46 @@
 
 namespace app;
 
-/*
 class Program
 {
     static async Task<int> Main(string[] args)
     {
-        var fileOption = new Option<FileInfo?>(
-            name: "--file",
-            description: "The file to read and display on the console.");
-
-        var rootCommand = new RootCommand("Sample app for System.CommandLine");
-        rootCommand.AddOption(fileOption);
-
-        rootCommand.SetHandler((file) => 
-            { 
-                ReadFile(file!); 
-            },
-            fileOption);
-
-        return await rootCommand.InvokeAsync(args);
-    }
-
-    static void ReadFile(FileInfo file)
-    {
-        File.ReadLines(file.FullName).ToList()
-            .ForEach(line => Console.WriteLine(line));
-    }
-}
-*/
-
-class Program
-{
-    static async Task<int> Main(string[] args)
-    {
-        var urlOption = new Option<Uri>(
+        var urlOption = new Option<string?>(
             name: "--url",
-            description: "The url to read and from which a GitHub repository should be cloned.");
+            description: "The URL to take and validate."
+        );
 
-        var rootCommand = new RootCommand("Sample app for System.CommandLine");
-        rootCommand.AddOption(fileOption);
+        var pathOption = new Option<string?>(
+            name: "--path",
+            description: "The path to take and validate."
+        );
 
-        rootCommand.SetHandler((file) => 
-            { 
-                ReadFile(file!); 
-            },
-            fileOption);
+        var rootCommand = new RootCommand("A simple program that takes a URL or a path and validates it.")
+        {
+            urlOption,
+            pathOption
+        };
+
+        rootCommand.SetHandler((string? url, string? path) =>
+        {
+            if (url != null)
+            {
+                Console.WriteLine($"You entered URL: {url}");
+                Console.WriteLine(URLValidator.IsValidURL(url));
+                
+            }
+
+            if (path != null)
+            {
+                Console.WriteLine($"You entered path: {path}");
+            }
+
+            if (url == null && path == null)
+            {
+                Console.WriteLine("Please provide either a URL or a path.");
+            }
+        }, urlOption, pathOption);
 
         return await rootCommand.InvokeAsync(args);
-    }
-
-    static void ReadFile(FileInfo file)
-    {
-        File.ReadLines(file.FullName).ToList()
-            .ForEach(line => Console.WriteLine(line));
     }
 }
