@@ -26,7 +26,7 @@ class Program
         pathArg.AddValidator((path) => {
 
             if (true){
-                path.ErrorMessage = $"Invalid URL: {url.Tokens[0].Value}";
+                path.ErrorMessage = $"Invalid Path: ";
             }
         });
 
