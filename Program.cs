@@ -1,4 +1,5 @@
 ﻿using System.CommandLine;
+using System.IO;
 
 namespace app;
 
@@ -25,8 +26,8 @@ class Program
 
         pathArg.AddValidator((path) => {
 
-            if (true){
-                path.ErrorMessage = $"Invalid Path: ";
+            if (!pathValidator.isValidPath(path.Tokens[0].Value)){
+                path.ErrorMessage = $"Invalid Path: {path.Tokens[0].Value}";
             }
         });
 
@@ -45,26 +46,6 @@ class Program
         pathCommand.SetHandler((path)=> {
             Console.WriteLine($"You entered path: {path}");
         }, pathArg);
-        /*
-        rootCommand.SetHandler((string? url, string? path) =>
-        {
-            if (url != null)
-            {
-                Console.WriteLine($"You entered URL: {url}");
-                Console.WriteLine(URLValidator.IsValidURL(url));
-                
-            }
-
-            if (path != null)
-            {
-                Console.WriteLine($"You entered path: {path}");
-            }
-
-            if (url == null && path == null)
-            {
-                Console.WriteLine("Please provide either a URL or a path.");
-            }
-        }, urlOption, pathOption);*/
 
         return await rootCommand.InvokeAsync(args);
     }
