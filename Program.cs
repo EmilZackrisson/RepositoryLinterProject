@@ -24,8 +24,9 @@ class Program
         var pathCommand = new Command("path", "Run linter on path");
         var pathArg = new Argument<string>("path", "Path");
 
-        pathArg.AddValidator((path) => {
-
+        pathArg.AddValidator((path) =>
+        {
+            Console.WriteLine(Directory.Exists(@"C:\Users"));
             if (!pathValidator.isValidPath(path.Tokens[0].Value)){
                 path.ErrorMessage = $"Invalid Path: {path.Tokens[0].Value}";
             }
