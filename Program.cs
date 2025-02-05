@@ -5,7 +5,7 @@ namespace app;
 
 class Program
 {
-    static async Task<int> Main(string[] args)
+    private static async Task<int> Main(string[] args)
     {
         var rootCommand = new RootCommand("A simple program that takes a URL or a path and validates it.");
 
@@ -26,7 +26,6 @@ class Program
 
         pathArg.AddValidator((path) =>
         {
-            Console.WriteLine(Directory.Exists(@"C:\Users"));
             if (!pathValidator.isValidPath(path.Tokens[0].Value)){
                 path.ErrorMessage = $"Invalid Path: {path.Tokens[0].Value}";
             }
@@ -39,7 +38,7 @@ class Program
 
         urlCommand.SetHandler((url) => {
             Console.WriteLine($"You entered URL: {url}");
-                Console.WriteLine(URLValidator.IsValidURL(url));
+            Git.
         }, urlArg);
 
         

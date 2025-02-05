@@ -17,12 +17,6 @@ public class pathValidator
     
     public static bool isValidPath(string path)
     {
-        if (string.IsNullOrWhiteSpace(path))
-        {
-            return false;
-        }
-
-        Console.WriteLine($"Hello there {path}");
         if(Directory.Exists(path))
         {
             return true;
