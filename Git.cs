@@ -12,7 +12,6 @@ class Git
     }
     public void Clone()
     {
-        Console.WriteLine(PathToGitRepository);
         var p = new Process
         {
             StartInfo =
@@ -31,5 +30,10 @@ class Git
             throw new Exception("Failed to clone git repository");
         }
         p.WaitForExit();
+
+        if (!Directory.Exists(PathToGitRepository))
+        {
+            throw new Exception("Failed to clone git repository");
+        }
     }
 }

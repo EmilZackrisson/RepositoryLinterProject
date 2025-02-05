@@ -39,7 +39,19 @@ class Program
         urlCommand.SetHandler((url) => {
             Console.WriteLine($"You entered URL: {url}");
             var git = new Git(url);
-            git.Clone();
+
+            try
+            {
+                git.Clone();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Environment.Exit(1);
+            }
+            
+            //EnumerateFiles
+            
         }, urlArg);
 
         
