@@ -29,6 +29,7 @@ class Program
             if (!pathValidator.isValidPath(path.Tokens[0].Value)){
                 path.ErrorMessage = $"Invalid Path: {path.Tokens[0].Value}";
             }
+            
         });
 
         pathCommand.AddArgument(pathArg);
@@ -50,7 +51,22 @@ class Program
                 Environment.Exit(1);
             }
             
-            //EnumerateFiles
+            string clonedFoldersPath = Path.Join(Directory.GetCurrentDirectory(), "/git");
+            List<string> fileList = new List<string>(Directory.EnumerateFiles(clonedFoldersPath));
+            
+            if (fileList.Count == 0)
+            {
+                Console.WriteLine("No files found in given folder.");
+                Environment.Exit(1);
+            }
+
+            foreach (var filepath in fileList)
+            {
+                Console.WriteLine(filepath);
+            }
+            
+            Console.WriteLine(fileList.Contains(Path.Join(clonedFoldersPath, ".gitignore")));
+            Console.WriteLine(fileList.Contains(Path.Join(clonedFoldersPath, "LICENSE")));
             
         }, urlArg);
 
@@ -58,6 +74,20 @@ class Program
 
         pathCommand.SetHandler((path)=> {
             Console.WriteLine($"You entered path: {path}");
+            
+            List<string> fileList = new List<string>(Directory.EnumerateFiles(path));
+
+            if (fileList.Count == 0)
+            {
+                Console.WriteLine("No files found in given folder.");
+                Environment.Exit(1);
+            }
+
+            foreach (var filepath in fileList)
+            {
+                Console.WriteLine(filepath);
+            }
+            
         }, pathArg);
 
         return await rootCommand.InvokeAsync(args);
